@@ -31,9 +31,19 @@ function operate(a, operator, b) {
     }
 };
 
+createDisplay();
 createButtons();
 
+function createDisplay() {
+    const inputDisplay = document.createElement("div");
+    inputDisplay.id = "inputDisplay";
+    inputDisplay.innerText = "23487";
+    document.getElementById("calculator").appendChild(inputDisplay);
+}
+
 function createButtons() {
+    const buttonGroup = document.createElement("div");
+    buttonGroup.id = "buttonGroup";
     const buttonValues = "1234567890+-*/".split("");
     buttonValues.forEach(val => {
         const button = document.createElement("button");
@@ -41,6 +51,7 @@ function createButtons() {
         button.innerText = `${val}`;
         button.value = val;
         button.classList.add(isNaN(Number(val)) ? "operator-button" : "number-button");
-        document.getElementById("calculator").appendChild(button);
+        buttonGroup.appendChild(button);
     });
+    document.getElementById("calculator").appendChild(buttonGroup);
 }
