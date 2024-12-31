@@ -33,6 +33,7 @@ function operate(a, operator, b) {
 
 createDisplay();
 createButtons();
+addClearButton();
 
 function createDisplay() {
     const inputDisplay = document.createElement("div");
@@ -42,8 +43,8 @@ function createDisplay() {
 }
 
 function createButtons() {
-    const buttonGroup = document.createElement("div");
-    buttonGroup.id = "buttonGroup";
+    const buttons = document.createElement("div");
+    buttons.id = "buttons";
     const buttonValues = "1234567890+-*/".split("");
     buttonValues.forEach(val => {
         const button = document.createElement("button");
@@ -51,7 +52,14 @@ function createButtons() {
         button.innerText = `${val}`;
         button.value = val;
         button.classList.add(isNaN(Number(val)) ? "operator-button" : "number-button");
-        buttonGroup.appendChild(button);
+        buttons.appendChild(button);
     });
-    document.getElementById("calculator").appendChild(buttonGroup);
+    document.getElementById("calculator").appendChild(buttons);
+}
+
+function addClearButton() {
+    const button = document.createElement("button");
+    button.id = "clearButton";
+    button.innerText = "clear";
+    document.getElementById("buttons").appendChild(button);
 }
