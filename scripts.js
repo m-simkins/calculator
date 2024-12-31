@@ -1,14 +1,8 @@
-function add(a,b) {
-    return a + b;
-}
+function add(a,b) {return a + b;}
 
-function subtract(a,b) {
-    return a - b;
-}
+function subtract(a,b) {return a - b;}
 
-function multiply(a,b) {
-    return a * b;
-}
+function multiply(a,b) {return a * b;}
 
 function divide(a,b) {
     return a / b;
@@ -37,7 +31,16 @@ function operate(a, operator, b) {
     }
 };
 
-console.log(operate(6, "+", 3));
-console.log(operate(6, "-", 3));
-console.log(operate(6, "*", 3));
-console.log(operate(6, "/", 3));
+createButtons();
+
+function createButtons() {
+    const buttonValues = "1234567890+-*/".split("");
+    buttonValues.forEach(val => {
+        const button = document.createElement("button");
+        button.id = `button${val}`;
+        button.innerText = `${val}`;
+        button.value = val;
+        button.classList.add(isNaN(Number(val)) ? "operator-button" : "number-button");
+        document.getElementById("calculator").appendChild(button);
+    });
+}
