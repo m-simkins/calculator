@@ -4,15 +4,13 @@ function subtract(a,b) {return a - b;}
 
 function multiply(a,b) {return a * b;}
 
-function divide(a,b) {
-    return a / b;
-}
+function divide(a,b) {return a / b;}
 
 let a;
-let operator;
 let b;
+let operator;
 
-function operate(a, operator, b) {
+function operate(a, b, operator) {
     switch (operator) {
         case "+":
             return add(a,b);
@@ -33,13 +31,12 @@ function operate(a, operator, b) {
 
 createDisplay();
 createButtons();
-addClearButton();
 
 function createDisplay() {
-    const inputDisplay = document.createElement("div");
-    inputDisplay.id = "inputDisplay";
-    inputDisplay.innerText = "23487";
-    document.getElementById("calculator").appendChild(inputDisplay);
+    const display = document.createElement("div");
+    display.id = "display";
+    display.innerText = "0";
+    document.getElementById("calculator").appendChild(display);
 }
 
 function createButtons() {
@@ -55,11 +52,26 @@ function createButtons() {
         buttons.appendChild(button);
     });
     document.getElementById("calculator").appendChild(buttons);
+    addSpecialButtons();
 }
 
-function addClearButton() {
-    const button = document.createElement("button");
-    button.id = "clearButton";
-    button.innerText = "clear";
-    document.getElementById("buttons").appendChild(button);
+function addSpecialButtons() {
+    ["=", "Clear"].forEach(value => {        
+        const button = document.createElement("button");
+        button.id = `button${value}`;
+        button.innerText = `${value}`;
+        document.getElementById("buttons").appendChild(button);
+    });
 }
+
+Array.from(document.getElementsByClassName("number-button")).forEach(button => {
+    button.addEventListener("click", () => {
+        if (!a) {
+            a = Number(button.value);
+        } else {
+            b = Number(button.value);
+        }
+        document.getElementById("display").innerText = button.value;
+        console.log(a, b);
+    })
+});
