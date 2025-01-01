@@ -1,8 +1,6 @@
-let a = 0;
+let a;
 let operator;
 let b;
-
-document.getElementById("display").innerText = a;
 
 function add(a,b) {return a + b;}
 function subtract(a,b) {return a - b;}
@@ -27,7 +25,11 @@ function operate(a, operator, b) {
         default:
             break;
     }
-    return parseFloat(result).toFixed(3);
+    if (!Number.isInteger(Number(result))) {
+        return parseFloat(result).toFixed(3);
+    } else {
+        return (Number(result));
+    }
 };
 
 const inputs = "1234567890C=+-*/".split("");
@@ -60,7 +62,7 @@ const numbers = Array.from(document.getElementsByClassName("number"))
 numbers.forEach(button => {
     let display = document.getElementById("display");
     button.addEventListener("click", () => {
-        if (Number(display.innerText) === a) {
+        if (display.innerText === "0" || (operator && display.innerText === `${a}`)) {
             display.innerText = button.value;
         } else {
             display.innerText += button.value;
@@ -73,13 +75,8 @@ operators.forEach(button => {
     button.addEventListener("click", () => {
         if (!a) {
             a = Number(document.getElementById("display").innerText);
-            operator = button.value;
-        } else {
-            b = Number(document.getElementById("display").innerText);
-            a = operate(a, operator, b);
-            document.getElementById("display").innerText = a;
-            b = undefined;
         }
+        operator = button.value;
         console.log(a, operator, b);
     })
 })
@@ -87,18 +84,18 @@ operators.forEach(button => {
 document.getElementById("button=").addEventListener("click", () => {
     if (a && operator) {
         b = Number(document.getElementById("display").innerText);
-        a = operate(a, operator, b);
-        document.getElementById("display").innerText = a;
-        b = undefined;
-        operator = undefined;
+        setInitial(operate(a, operator, b));
     }
 })
 
 document.getElementById("buttonC").addEventListener("click", () => {
-    a = 0;
+    setInitial(0);
+});
+
+function setInitial(n) {
+    a = n;
     operator = undefined;
     b = undefined;
-    document.getElementById("display").innerText = 0;
+    document.getElementById("display").innerText = a;
     console.log(a, operator, b);
-})
-
+}
