@@ -1,32 +1,35 @@
 let a;
-let b;
 let operator;
+let b;
 
 function add(a,b) {return a + b;}
 function subtract(a,b) {return a - b;}
 function multiply(a,b) {return a * b;}
 function divide(a,b) {return a / b;}
 
-function operate(a, b, operator) {
+function operate(a, operator, b) {
+    let result;
     switch (operator) {
         case "+":
-            return add(a,b);
+            result = add(a,b);
             break;
         case "-":
-            return subtract(a,b);
+            result = subtract(a,b);
             break;
         case "*":
-            return multiply(a,b);
+            result = multiply(a,b);
             break;
         case "/":
-            return divide(a,b);
+            result = divide(a,b);
             break;
         default:
             break;
     }
+    document.getElementById("display").innerText = result;
+    console.log(`${a} ${operator} ${b} = ${result}`);
 };
 
-const inputs = "9876543210C=+-*/".split("");
+const inputs = "1234567890C=+-*/".split("");
 
 makeButtons();
 
@@ -35,19 +38,19 @@ function makeButtons() {
         const button = document.createElement("button");
         button.value = input;
         button.id = `button${input}`;
+        button.innerText = `${input}`;
 
-        let type;
-        if (inputs.slice(0, 9).includes(input)) {
-            type = "number";
-        } else if (inputs.slice(9, 12).includes(input)) {
-            type = "special";
+        if (inputs.slice(0, 10).includes(input)) {
+            button.classList.add("number");
         } else if (inputs.slice(-4).includes(input)) {
-            type = "operator";
+            button.classList.add("operator");
         }
 
-        button.classList.add("button", `${type}`);
-        button.innerText = `${input}`;
-        document.getElementById(`${type}s`).appendChild(button);
+        if (button.classList.contains("operator")) {
+            document.getElementById("operators").appendChild(button);
+        } else {
+            document.getElementById("nonops").appendChild(button);
+        }
 
     });
 }
@@ -57,13 +60,35 @@ numbers.forEach(button => {
     button.addEventListener("click", () => {
         document.getElementById("display").innerText = button.value;
         if (!a) {
-            a = button.value;
+            a = Number(button.value);
         } else {
             if (b) {
                 a = b;
             } 
-            b = button.value;
+            b = Number(button.value);
         }
-        console.log(a,b);
+        console.log(a, operator, b);
     })
+})
+
+const operators = Array.from(document.getElementsByClassName("operator"))
+operators.forEach(button => {
+    button.addEventListener("click", () => {
+        operator = button.value;
+        console.log(a, operator, b);
+    })
+})
+
+document.getElementById("button=").addEventListener("click", () => {
+    if (a && operator && b) {
+        operate(a, operator, b);
+    }
+})
+
+document.getElementById("buttonC").addEventListener("click", () => {
+    a = undefined;
+    operator = undefined;
+    b = undefined;
+    document.getElementById("display").innerText = 0;
+    console.log(a, operator, b);
 })

@@ -26,15 +26,20 @@ body {
 
 #nonops {
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap-reverse;
     border: none;
 }
 
 #operators {
     display: flex;
     flex-direction: column-reverse;
+    border: none;
 }
 
-.button {
+button {
     width: 100px;
+}
+
+#button0, #buttonC, #button\= {
+    order: -1;
 }
