@@ -84,7 +84,11 @@ operators.forEach(button => {
 document.getElementById("button=").addEventListener("click", () => {
     if (a && operator && document.getElementById("display").innerText !== `${a}`) {
         b = Number(document.getElementById("display").innerText);
-        setInitial(operate(a, operator, b));
+        if (operator === "/" && b === 0) {
+            alert("not in my house");
+        } else {
+            setInitial(operate(a, operator, b));
+        }
     }
 })
 
