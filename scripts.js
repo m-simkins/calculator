@@ -1,6 +1,8 @@
-let a;
+let a = 0;
 let operator;
 let b;
+
+document.getElementById("display").innerText = a;
 
 function add(a,b) {return a + b;}
 function subtract(a,b) {return a - b;}
@@ -8,22 +10,24 @@ function multiply(a,b) {return a * b;}
 function divide(a,b) {return a / b;}
 
 function operate(a, operator, b) {
+    let result;
     switch (operator) {
         case "+":
-            return add(a,b);
+            result = add(a,b);
             break;
         case "-":
-            return subtract(a,b);
+            result = subtract(a,b);
             break;
         case "*":
-            return multiply(a,b);
+            result = multiply(a,b);
             break;
         case "/":
-            return divide(a,b);
+            result = divide(a,b);
             break;
         default:
             break;
     }
+    return parseFloat(result).toFixed(3);
 };
 
 const inputs = "1234567890C=+-*/".split("");
@@ -54,37 +58,35 @@ function makeButtons() {
 
 const numbers = Array.from(document.getElementsByClassName("number"))
 numbers.forEach(button => {
+    let display = document.getElementById("display");
     button.addEventListener("click", () => {
-        document.getElementById("display").innerText = button.value;
-        if (!a) {
-            a = Number(button.value);
+        if (Number(display.innerText) === a) {
+            display.innerText = button.value;
         } else {
-            if (b) {
-                a = b;
-            } 
-            b = Number(button.value);
+            display.innerText += button.value;
         }
-        console.log(a, operator, b);
     })
 })
 
 const operators = Array.from(document.getElementsByClassName("operator"))
 operators.forEach(button => {
     button.addEventListener("click", () => {
-        if (a && operator && b) {
+        if (!a) {
+            a = Number(document.getElementById("display").innerText);
+            operator = button.value;
+        } else {
+            b = Number(document.getElementById("display").innerText);
             a = operate(a, operator, b);
             document.getElementById("display").innerText = a;
-            operator = button.value;
             b = undefined;
-        } else {
-            operator = button.value;
         }
         console.log(a, operator, b);
     })
 })
 
 document.getElementById("button=").addEventListener("click", () => {
-    if (a && operator && b) {
+    if (a && operator) {
+        b = Number(document.getElementById("display").innerText);
         a = operate(a, operator, b);
         document.getElementById("display").innerText = a;
         b = undefined;
@@ -93,7 +95,7 @@ document.getElementById("button=").addEventListener("click", () => {
 })
 
 document.getElementById("buttonC").addEventListener("click", () => {
-    a = undefined;
+    a = 0;
     operator = undefined;
     b = undefined;
     document.getElementById("display").innerText = 0;
