@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    /* border: 1px solid black; */
     font-size: 2rem;
     font-family: 'Courier New', Courier, monospace;
 }
@@ -15,7 +14,7 @@ h1 {
 }
 
 #calculator {
-    width: 400px;
+    width: 360px;
 }
 
 #display {
@@ -26,25 +25,40 @@ h1 {
 
 #buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: row wrap;
 }
 
 #nonops {
     display: flex;
-    flex-flow: row wrap-reverse;
-    border: none;
+    flex-flow: row-reverse wrap;
 }
 
-#operators {
+#ops {
     display: flex;
-    flex-direction: column-reverse;
-    border: none;
+    flex-direction: column;
 }
 
-button {
-    width: 100px;
+#bigButtons {
+    display: flex;
+    flex-direction: row;
 }
 
-#button0, #buttonC, #button\= {
-    order: -1;
+#buttonC {
+    flex: 3;
+}
+
+.button {
+    width: 90px;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+#display, .button {
+    border: 1px solid black;
+}
+
+.operator {
+    background-color: #999;
 }

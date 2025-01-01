@@ -32,7 +32,8 @@ function operate(a, operator, b) {
     }
 };
 
-const inputs = "1234567890C=+-*/".split("");
+const inputs = "987654321←.0C/*-+=".split("");
+
 
 makeButtons();
 
@@ -42,20 +43,28 @@ function makeButtons() {
         button.value = input;
         button.id = `button${input}`;
         button.innerText = `${input}`;
-
-        if (inputs.slice(0, 10).includes(input)) {
-            button.classList.add("number");
-        } else if (inputs.slice(-4).includes(input)) {
-            button.classList.add("operator");
-        }
-
-        if (button.classList.contains("operator")) {
-            document.getElementById("operators").appendChild(button);
-        } else {
-            document.getElementById("nonops").appendChild(button);
-        }
-
+        button.classList.add("button");
+        arrangeButtons(button);
     });
+}
+
+function arrangeButtons(button) {
+    if (Number(button.value)) {
+        button.classList.add("number");
+        document.getElementById("nonops").appendChild(button);
+    } else if (inputs.slice(-5).includes(button.value)) {
+        button.classList.add("operator");
+        document.getElementById("ops").appendChild(button);
+    } else {
+        button.classList.add("special");
+        if (button.value === "0") {
+            button.classList.add("number");
+        }
+        if (button.value === "C") {
+            button.classList.add("big");
+        }
+        document.getElementById("nonops").appendChild(button);
+    }
 }
 
 const numbers = Array.from(document.getElementsByClassName("number"))
@@ -73,11 +82,13 @@ numbers.forEach(button => {
 const operators = Array.from(document.getElementsByClassName("operator"))
 operators.forEach(button => {
     button.addEventListener("click", () => {
-        if (!a) {
-            a = Number(document.getElementById("display").innerText);
+        if (button.value === "=") {
+            if (!a) {
+                a = Number(document.getElementById("display").innerText);
+            }
+            operator = button.value;
+            console.log(a, operator, b);
         }
-        operator = button.value;
-        console.log(a, operator, b);
     })
 })
 
