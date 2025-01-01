@@ -8,25 +8,22 @@ function multiply(a,b) {return a * b;}
 function divide(a,b) {return a / b;}
 
 function operate(a, operator, b) {
-    let result;
     switch (operator) {
         case "+":
-            result = add(a,b);
+            return add(a,b);
             break;
         case "-":
-            result = subtract(a,b);
+            return subtract(a,b);
             break;
         case "*":
-            result = multiply(a,b);
+            return multiply(a,b);
             break;
         case "/":
-            result = divide(a,b);
+            return divide(a,b);
             break;
         default:
             break;
     }
-    document.getElementById("display").innerText = result;
-    console.log(`${a} ${operator} ${b} = ${result}`);
 };
 
 const inputs = "1234567890C=+-*/".split("");
@@ -74,14 +71,24 @@ numbers.forEach(button => {
 const operators = Array.from(document.getElementsByClassName("operator"))
 operators.forEach(button => {
     button.addEventListener("click", () => {
-        operator = button.value;
+        if (a && operator && b) {
+            a = operate(a, operator, b);
+            document.getElementById("display").innerText = a;
+            operator = button.value;
+            b = undefined;
+        } else {
+            operator = button.value;
+        }
         console.log(a, operator, b);
     })
 })
 
 document.getElementById("button=").addEventListener("click", () => {
     if (a && operator && b) {
-        operate(a, operator, b);
+        a = operate(a, operator, b);
+        document.getElementById("display").innerText = a;
+        b = undefined;
+        operator = undefined;
     }
 })
 
@@ -92,3 +99,4 @@ document.getElementById("buttonC").addEventListener("click", () => {
     document.getElementById("display").innerText = 0;
     console.log(a, operator, b);
 })
+
