@@ -51,3 +51,19 @@ function makeButtons() {
 
     });
 }
+
+const numbers = Array.from(document.getElementsByClassName("number"))
+numbers.forEach(button => {
+    button.addEventListener("click", () => {
+        document.getElementById("display").innerText = button.value;
+        if (!a) {
+            a = button.value;
+        } else {
+            if (b) {
+                a = b;
+            } 
+            b = button.value;
+        }
+        console.log(a,b);
+    })
+})
