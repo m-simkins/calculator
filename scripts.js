@@ -26,10 +26,7 @@ function operate(a, b, operator) {
     }
 };
 
-const inputs = "1234567890C=+-*/".split("");
-const numbers = inputs.slice(0, 9);
-const specials = inputs.slice(9, 12);
-const operators = inputs.slice(-4);
+const inputs = "9876543210C=+-*/".split("");
 
 makeButtons();
 
@@ -38,45 +35,19 @@ function makeButtons() {
         const button = document.createElement("button");
         button.value = input;
         button.id = `button${input}`;
-        button.classList.add("button");
+
+        let type;
+        if (inputs.slice(0, 9).includes(input)) {
+            type = "number";
+        } else if (inputs.slice(9, 12).includes(input)) {
+            type = "special";
+        } else if (inputs.slice(-4).includes(input)) {
+            type = "operator";
+        }
+
+        button.classList.add("button", `${type}`);
         button.innerText = `${input}`;
-        document.getElementById("buttons").appendChild(button);
+        document.getElementById(`${type}s`).appendChild(button);
+
     });
 }
-
-// function createButtons() {
-//     const buttons = document.createElement("div");
-//     buttons.id = "buttons";
-//     const buttonValues = "1234567890+-*/".split("");
-//     buttonValues.forEach(val => {
-//         const button = document.createElement("button");
-//         button.id = `button${val}`;
-//         button.innerText = `${val}`;
-//         button.value = val;
-//         button.classList.add(isNaN(Number(val)) ? "operator-button" : "number-button");
-//         buttons.appendChild(button);
-//     });
-//     document.getElementById("calculator").appendChild(buttons);
-//     addSpecialButtons();
-// }
-
-// function addSpecialButtons() {
-//     ["=", "Clear"].forEach(value => {        
-//         const button = document.createElement("button");
-//         button.id = `button${value}`;
-//         button.innerText = `${value}`;
-//         document.getElementById("buttons").appendChild(button);
-//     });
-// }
-
-// Array.from(document.getElementsByClassName("number-button")).forEach(button => {
-//     button.addEventListener("click", () => {
-//         if (!a) {
-//             a = Number(button.value);
-//         } else {
-//             b = Number(button.value);
-//         }
-//         document.getElementById("display").innerText = button.value;
-//         console.log(a, b);
-//     })
-// });

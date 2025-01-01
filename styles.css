@@ -1,8 +1,40 @@
 * {
     box-sizing: border-box;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 body {
     background-color: #333;
+}
+
+#calculator {
+    width: 400px;
+}
+
+#display {
+    background-color: #666;
+    text-align: end;
+    padding-right: 6px;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+#nonops {
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+#operators {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.button {
+    width: 100px;
 }
