@@ -53,14 +53,15 @@ function arrangeButtons(button) {
         button.classList.add("number");
         document.getElementById("nonops").appendChild(button);
     } else if (inputs.slice(-5).includes(button.value)) {
-        button.classList.add("operator");
+        if (button.value !== "=") {
+            button.classList.add("operator");
+        }
         document.getElementById("ops").appendChild(button);
     } else {
         button.classList.add("special");
         if (button.value === "0") {
             button.classList.add("number");
-        }
-        if (button.value === "C") {
+        } else if (button.value === "C") {
             button.classList.add("big");
         }
         document.getElementById("nonops").appendChild(button);
@@ -79,18 +80,15 @@ numbers.forEach(button => {
     })
 })
 
-const operators = Array.from(document.getElementsByClassName("operator"))
+const operators = Array.from(document.getElementsByClassName("operator"));
 operators.forEach(button => {
     button.addEventListener("click", () => {
-        if (button.value === "=") {
-            if (!a) {
-                a = Number(document.getElementById("display").innerText);
-            }
-            operator = button.value;
-            console.log(a, operator, b);
+        if (!a) {
+            a = Number(document.getElementById("display").innerText);
         }
-    })
-})
+        operator = button.value;
+    });
+});
 
 document.getElementById("button=").addEventListener("click", () => {
     if (a && operator && document.getElementById("display").innerText !== `${a}`) {
@@ -112,5 +110,4 @@ function setInitial(n) {
     operator = undefined;
     b = undefined;
     document.getElementById("display").innerText = a;
-    console.log(a, operator, b);
 }

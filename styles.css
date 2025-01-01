@@ -59,6 +59,6 @@ h1 {
     border: 1px solid black;
 }
 
-.operator {
+#ops * {
     background-color: #999;
 }
