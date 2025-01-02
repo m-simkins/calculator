@@ -111,3 +111,10 @@ function setInitial(n) {
     b = undefined;
     document.getElementById("display").innerText = a;
 }
+
+document.getElementById("button.").addEventListener("click", () => {
+    const display = document.getElementById("display");
+    if (!display.innerText.includes(".")) {
+        display.innerText += ".";
+    }
+});
