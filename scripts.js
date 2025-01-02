@@ -118,3 +118,15 @@ document.getElementById("button.").addEventListener("click", () => {
         display.innerText += ".";
     }
 });
+
+document.getElementById("button←").addEventListener("click", () => {
+    const display = document.getElementById("display");
+    const input = display.innerText;
+    if (input !== 0) {
+        if (input.length === 1) {
+            display.innerText = "0";
+        } else {
+            display.innerText = display.innerText.slice(0, -1);
+        }
+    }
+})
